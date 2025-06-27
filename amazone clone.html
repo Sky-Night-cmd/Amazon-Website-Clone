@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amazon Clone</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: white;
+    }
+
+    .navbar {
+      background-color: #131921;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-left,
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #f08804;
+      cursor: pointer;
+    }
+
+    .location {
+      font-size: 12px;
+      line-height: 1.2;
+      cursor: pointer;
+    }
+
+    .location span {
+      display: block;
+      font-weight: bold;
+    }
+
+    .search-bar {
+      flex: 1;
+      display: flex;
+      max-width: 600px;
+      margin: 10px 20px;
+      background-color: white;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-bar button {
+      background-color: #febd69;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .nav-item {
+      font-size: 12px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nav-item span {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .cart-icon::before {
+      content: "\1F6D2";
+      font-size: 22px;
+    }
+
+    .cart-icon {
+      cursor: pointer;
+    }
+
+    .menu-bar {
+      background-color: #232f3e;
+      padding: 0 20px;
+      overflow-x: auto;
+      border-bottom: 1px solid #3a4553;
+    }
+
+    .menu-bar ul {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      list-style: none;
+      padding: 10px 0;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .menu-bar li {
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .menu-bar li:hover {
+      background-color: #37475a;
+    }
+
+    .hero-slider {
+      position: relative;
+      overflow: hidden;
+      height: calc(100vh - 120px);
+      width: 100%;
+      margin-top: 0;
+      z-index: 1;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+    }
+
+    .hero-slider .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .hero-slider .slide.active {
+      display: block;
+    }
+
+    .hero-slider img {
+      width: 100vw;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      font-size: 28px;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+
+    .arrow.right {
+      right: 10px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 40px;
+      gap: 10px;
+      justify-content: space-between;
+      margin-top: -250px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .container-2 {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 40px;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+
+    .card h2 span {
+      color: #00a8e1;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .grid img,
+    .large-img img,
+    .big-img img,
+    .row-three img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .grid img:hover,
+    .large-img img:hover,
+    .big-img img:hover,
+    .row-three img:hover {
+      transform: scale(1.05);
+    }
+
+    .item {
+      font-size: 13px;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .large-img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      flex-grow: 1;
+      display: flex;
+    }
+
+    .large-img img {
+      height: 240px;
+    }
+
+    .big-img {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .row-three {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .row-three>div {
+      flex: 1;
+    }
+
+    .link {
+      color: #00a8e1;
+      text-decoration: none;
+      font-size: 14px;
+      margin-top: auto;
+      padding-top: 15px;
+      display: inline-block;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+
+ .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #00264d; /* Dark blue */
+    color: white;
+    padding: 12px 16px;
+    border-radius: 50%;
+    font-size: 24px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+  }
+
+  .back-to-top:hover {
+    background-color: #004080;
+    transform: scale(1.1);
+  }
+
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .search-bar {
+        flex: 1 1 100%;
+        margin: 10px 0;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-left,
+      .navbar-right {
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .hero-slider {
+        height: 300px;
+      }
+
+      .product-grid {
+        margin-top: -100px;
+        padding-top: 100px;
+      }
+    }
+
+    .slider-wrapper {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      max-width: 1400px;
+      margin: 60px auto;
+    }
+
+    .slider-title {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #1a1a1a;
+      text-align: center;
+      position: relative;
+    }
+
+    .slider-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: #007acc;
+      border-radius: 5px;
+    }
+
+    .slider-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      padding-bottom: 12px;
+    }
+
+    .slider-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slide {
+      flex: 0 0 auto;
+      width: 170px;
+      height: 220px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      /* ✨ Soft subtle shadow */
+      scroll-snap-align: start;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 8px;
+      transform-origin: center center;
+    }
+
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #f9f9f9;
+      transition: none;
+    }
+
+    .slide:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), 0 6px 10px rgba(0, 0, 0, 0.04);
+      /* ✨ Layered modern lift */
+    }
+
+
+    .big-card {
+      background: #fff;
+      padding: 40px;
+      margin: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .fancy-line {
+      border: none;
+      height: 4px;
+      width: 80px;
+      background: linear-gradient(to right, #007bff, #00c6ff);
+      border-radius: 10px;
+      margin: -10px 0 30px 0;
+    }
+
+
+    .section-title {
+      font-size: 34px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #111;
+    }
+
+    .slider-container {
+      overflow-x: auto;
+      display: flex;
+      gap: 30px;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 25px;
+      padding-bottom: 10px;
+    }
+
+    .slider-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .product-card {
+      flex: 0 0 auto;
+      width: 280px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      scroll-snap-align: start;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: scale(1.06);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+
+    .product-title {
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #222;
+    }
+
+    .product-description {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      color: #b12704;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .stars {
+      color: #f0c14b;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .shipping {
+      font-size: 14px;
+      color: #007600;
+    }
+
+
+    footer {
+      background-color: #131A22;
+    }
+
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 50px 100px;
+    }
+
+    .footer-column {
+      flex: 1 1 220px;
+      margin: 20px;
+    }
+
+    .footer-column h3 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+
+    .footer-column a {
+      display: block;
+      text-decoration: none;
+      color: #ccc;
+      font-size: 14px;
+      line-height: 1.8;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #2c3e50;
+      padding: 30px 100px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      background-color: #131A22;
+    }
+
+    .footer-bottom img {
+      width: 85px;
+    }
+
+    .footer-bottom select,
+    .footer-bottom button {
+      background-color: #1c2a36;
+      color: #ddd;
+      border: 1px solid #555;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .footer-bottom .location {
+      display: flex;
+      align-items: center;
+      background-color: #1c2a36;
+      border: 1px solid #555;
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    .footer-bottom .location img {
+      width: 20px;
+      margin-right: 8px;
+    }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      padding: 40px 100px 20px;
+    }
+
+    .link-item {
+      line-height: 1.5;
+    }
+
+    .link-item strong {
+      display: block;
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .link-item span {
+      font-size: 13px;
+      color: #ccc;
+    }
+
+    .footer-legal {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      padding: 30px 20px 40px;
+    }
+
+    .footer-legal a {
+      color: #ccc;
+      text-decoration: none;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-legal a:hover {
+      color: #fff;
+    }
+
+    .footer-legal img {
+      vertical-align: middle;
+      width: 20px;
+      margin-left: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-container {
+        padding: 40px 20px;
+        flex-direction: column;
+      }
+
+      .footer-bottom {
+        padding: 20px;
+        flex-direction: column;
+      }
+
+      .link-grid {
+        padding: 30px 30px 10px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        width: 140px;
+        height: 180px;
+      }
+
+      .slider-title {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .slide {
+        width: 120px;
+        height: 160px;
+      }
+
+      .slider-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="navbar-left">
+      <div class="logo">amazon.pk</div>
+      <div class="location">
+        Deliver to<br><span>Pakistan</span>
+      </div>
+    </div>
+    <div class="search-bar">
+      <input type="text" placeholder="Search Amazon" />
+      <button>Search</button>
+    </div>
+    <div class="navbar-right">
+      <div class="nav-item">
+        Hello, Sign in<br><span>Account & Lists</span>
+      </div>
+      <div class="nav-item">
+        Returns<br><span>& Orders</span>
+      </div>
+      <div class="cart-icon"></div>
+    </div>
+  </header>
+
+  <nav class="menu-bar">
+    <ul>
+      <li>All</li>
+      <li>Today's Deals</li>
+      <li>Customer Service</li>
+      <li>Registry</li>
+      <li>Gift Cards</li>
+      <li>Sell</li>
+      <li>Prime</li>
+      <li>Amazon App</li>
+      <li>Electronics</li>
+      <li>Home</li>
+    </ul>
+  </nav>
+
+  <section class="hero-slider">
+    <div class="slide active">
+      <img src="img/slide1.jpg" alt="Slide 1">
+    </div>
+    <div class="slide">
+      <img src="img/slide2.jpg" alt="Slide 2">
+    </div>
+    <div class="slide">
+      <img src="img/slide3.jpg" alt="Slide 3">
+    </div>
+    <div class="slide">
+      <img src="img/slide4.jpg" alt="Slide 4">
+    </div>
+    <button class="arrow left" onclick="prevSlide()">&#10094;</button>
+    <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+  </section>
+
+  <div class="container">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <h2><span>Shop for your home</span> essentials</h2>
+      <div class="grid">
+        <div>
+          <img src="img/1st 1.jpg" alt="Cleaning Tools">
+          <div class="item">Cleaning Tools</div>
+        </div>
+        <div>
+          <img src="img/1st 2.jpg" alt="Home Storage">
+          <div class="item">Home Storage</div>
+        </div>
+        <div>
+          <img src="img/1st 3.jpg" alt="Home Decor">
+          <div class="item">Home Decor</div>
+        </div>
+        <div>
+          <img src="img/1st 4.jpg" alt="Bedding">
+          <div class="item">Bedding</div>
+        </div>
+      </div>
+      <a href="#" class="link">Discover more in Home</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <h2>Get your game on</h2>
+      <div class="large-img">
+        <img src="img/2nd.jpg" alt="Gaming Setup">
+      </div>
+      <a href="#" class="link">Shop gaming</a>
+    </div>
+
+    <!-- ✅ Card 3 Fixed Layout -->
+    <div class="card">
+      <h2>Top categories in Kitchen appliances</h2>
+
+      <!-- Top big image -->
+      <div class="big-img">
+        <img src="img/3rd 1.jpg" alt="Cooker">
+        <div class="item">Cooker</div>
+      </div>
+
+      <!-- 3 images in row -->
+      <div class="row-three">
+        <div>
+          <img src="img/3rd 2.jpg" alt="Coffee">
+          <div class="item">Coffee</div>
+        </div>
+        <div>
+          <img src="img/3rd 3.jpg" alt="Pots and Pans">
+          <div class="item">Pots and Pans</div>
+        </div>
+        <div>
+          <img src="img/3rd 4.jpg" alt="Kettles">
+          <div class="item">Kettles</div>
+        </div>
+      </div>
+
+      <a href="#" class="link">Explore all products in Kitchen</a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <h2>Fashion trends you like</h2>
+      <div class="grid">
+        <div>
+          <img src="img/4th 1.jpg" alt="Dresses">
+          <div class="item">Dresses</div>
+        </div>
+        <div>
+          <img src="img/4th 2.jpg" alt="Knits">
+          <div class="item">Knits</div>
+        </div>
+        <div>
+          <img src="img/4th 3.jpg" alt="Jackets">
+          <div class="item">Jackets</div>
+        </div>
+        <div>
+          <img src="img/4th 4.jpg" alt="Jewelry">
+          <div class="item">Jewelry</div>
+        </div>
+      </div>
+      <a href="#" class="link">Explore more</a>
+    </div>
+
+  </div>
+
+  <div class="container-2">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <h2>Shop Fashion for less</h2>
+      <div class="grid">
+        <div>
+          <img src="img/2 1st 1.jpg" alt="Cleaning Tools">
+          <div class="item">Jeans under $50</div>
+        </div>
+        <div>
+          <img src="img/2 1st 2.jpg" alt="Home Storage">
+          <div class="item">Tops under $25</div>
+        </div>
+        <div>
+          <img src="img/2 1st 3.jpg" alt="Home Decor">
+          <div class="item">Dress under $30</div>
+        </div>
+        <div>
+          <img src="img/2 1st 4.jpg" alt="Bedding">
+          <div class="item">Shoes under $50</div>
+        </div>
+      </div>
+      <a href="#" class="link">See all deals</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <h2>New home arrivals under $50</h2>
+      <div class="grid">
+        <div>
+          <img src="img/2 2nd 1.jpg" alt="Cleaning Tools">
+          <div class="item">Kitchen and Dining</div>
+        </div>
+        <div>
+          <img src="img/2 2nd 2.jpg" alt="Home Storage">
+          <div class="item">Home Improvement</div>
+        </div>
+        <div>
+          <img src="img/2 2nd 3.jpg" alt="Home Decor">
+          <div class="item">Decor</div>
+        </div>
+        <div>
+          <img src="img/2 2nd 4.jpg" alt="Bedding">
+          <div class="item">Bedding & Bath</div>
+        </div>
+      </div>
+      <a href="#" class="link">Shop the latest from Home</a>
+    </div>
+
+    <!-- ✅ Card 3 Fixed Layout -->
+    <div class="card">
+      <h2>Toys under $25</h2>
+      <div class="large-img">
+        <img src="img/2 3rd.jpg" alt="Gaming Setup">
+      </div>
+      <a href="#" class="link">Shop now</a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <h2>Refresh your space</h2>
+      <div class="grid">
+        <div>
+          <img src="img/2 4th 1.jpg" alt="Dresses">
+          <div class="item">Dining</div>
+        </div>
+        <div>
+          <img src="img/2 4th 2.jpg" alt="Knits">
+          <div class="item">Home</div>
+        </div>
+        <div>
+          <img src="img/2 4th 3.jpg" alt="Jackets">
+          <div class="item">Kitchen</div>
+        </div>
+        <div>
+          <img src="img/2 4th 4.jpg" alt="Jewelry">
+          <div class="item">Health and Beauty</div>
+        </div>
+      </div>
+      <a href="#" class="link">See more</a>
+    </div>
+
+  </div>
+
+
+
+  <div class="slider-wrapper">
+    <div class="slider-title">Top Picks for Pakistan</div>
+
+    <div class="slider-container">
+      <div class="slide"><img src="img/slider 2 1.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 2.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 3.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 4.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 5.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 6.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 7.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 8.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 9.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 10.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 11.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 12.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 13.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 14.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 15.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 16.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 17.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 18.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 19.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 20.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 21.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 22.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 23.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 24.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 25.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 26.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 27.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 28.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 29.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 30.jpg" alt=""></div>
+    </div>
+  </div>
+
+
+
+
+  <div class="slider-wrapper">
+    <div class="slider-title">International top sellers in Kitchen</div>
+
+    <div class="slider-container">
+      <div class="slide"><img src="img/slider 1 1.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 2.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 3.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 4.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 5.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 6.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 7.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 8.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 9.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 10.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 11.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 12.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 13.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 14.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 15.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 16.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 17.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 18.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 19.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 20.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 21.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 22.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 23.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 24.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 25.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 26.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 27.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 28.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 29.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 30.jpg" alt=""></div>
+    </div>
+  </div>
+
+
+  <div class="container-2">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <h2><span>Shop for your home</span> essentials</h2>
+      <div class="grid">
+        <div>
+          <img src="img/1st 1.jpg" alt="Cleaning Tools">
+          <div class="item">Cleaning Tools</div>
+        </div>
+        <div>
+          <img src="img/1st 2.jpg" alt="Home Storage">
+          <div class="item">Home Storage</div>
+        </div>
+        <div>
+          <img src="img/1st 3.jpg" alt="Home Decor">
+          <div class="item">Home Decor</div>
+        </div>
+        <div>
+          <img src="img/1st 4.jpg" alt="Bedding">
+          <div class="item">Bedding</div>
+        </div>
+      </div>
+      <a href="#" class="link">Discover more in Home</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <h2>Get your game on</h2>
+      <div class="large-img">
+        <img src="img/2nd.jpg" alt="Gaming Setup">
+      </div>
+      <a href="#" class="link">Shop gaming</a>
+    </div>
+
+    <!-- ✅ Card 3 Fixed Layout -->
+    <div class="card">
+      <h2>Top categories in Kitchen appliances</h2>
+
+      <!-- Top big image -->
+      <div class="big-img">
+        <img src="img/3rd 1.jpg" alt="Cooker">
+        <div class="item">Cooker</div>
+      </div>
+
+      <!-- 3 images in row -->
+      <div class="row-three">
+        <div>
+          <img src="img/3rd 2.jpg" alt="Coffee">
+          <div class="item">Coffee</div>
+        </div>
+        <div>
+          <img src="img/3rd 3.jpg" alt="Pots and Pans">
+          <div class="item">Pots and Pans</div>
+        </div>
+        <div>
+          <img src="img/3rd 4.jpg" alt="Kettles">
+          <div class="item">Kettles</div>
+        </div>
+      </div>
+
+      <a href="#" class="link">Explore all products in Kitchen</a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <h2>Fashion trends you like</h2>
+      <div class="grid">
+        <div>
+          <img src="img/4th 1.jpg" alt="Dresses">
+          <div class="item">Dresses</div>
+        </div>
+        <div>
+          <img src="img/4th 2.jpg" alt="Knits">
+          <div class="item">Knits</div>
+        </div>
+        <div>
+          <img src="img/4th 3.jpg" alt="Jackets">
+          <div class="item">Jackets</div>
+        </div>
+        <div>
+          <img src="img/4th 4.jpg" alt="Jewelry">
+          <div class="item">Jewelry</div>
+        </div>
+      </div>
+      <a href="#" class="link">Explore more</a>
+    </div>
+
+  </div>
+
+
+
+
+
+
+  <div class="slider-wrapper">
+    <div class="slider-title">Top Picks for Pakistan</div>
+
+    <div class="slider-container">
+      <div class="slide"><img src="img/slider 2 1.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 2.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 3.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 4.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 5.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 6.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 7.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 8.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 9.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 10.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 11.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 12.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 13.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 14.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 15.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 16.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 17.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 18.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 19.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 20.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 21.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 22.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 23.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 24.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 25.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 26.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 27.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 28.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 29.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 30.jpg" alt=""></div>
+    </div>
+  </div>
+
+
+  <div class="slider-wrapper">
+    <div class="slider-title">International top sellers in Kitchen</div>
+
+    <div class="slider-container">
+      <div class="slide"><img src="img/slider 1 1.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 2.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 3.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 4.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 5.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 6.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 7.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 8.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 9.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 10.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 11.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 12.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 13.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 14.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 15.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 16.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 17.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 18.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 19.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 20.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 21.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 22.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 23.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 24.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 25.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 26.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 27.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 28.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 29.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 30.jpg" alt=""></div>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="container-2">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <h2>Shop Fashion for less</h2>
+      <div class="grid">
+        <div>
+          <img src="img/2 1st 1.jpg" alt="Cleaning Tools">
+          <div class="item">Jeans under $50</div>
+        </div>
+        <div>
+          <img src="img/2 1st 2.jpg" alt="Home Storage">
+          <div class="item">Tops under $25</div>
+        </div>
+        <div>
+          <img src="img/2 1st 3.jpg" alt="Home Decor">
+          <div class="item">Dress under $30</div>
+        </div>
+        <div>
+          <img src="img/2 1st 4.jpg" alt="Bedding">
+          <div class="item">Shoes under $50</div>
+        </div>
+      </div>
+      <a href="#" class="link">See all deals</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <h2>New home arrivals under $50</h2>
+      <div class="grid">
+        <div>
+          <img src="img/2 2nd 1.jpg" alt="Cleaning Tools">
+          <div class="item">Kitchen and Dining</div>
+        </div>
+        <div>
+          <img src="img/2 2nd 2.jpg" alt="Home Storage">
+          <div class="item">Home Improvement</div>
+        </div>
+        <div>
+          <img src="img/2 2nd 3.jpg" alt="Home Decor">
+          <div class="item">Decor</div>
+        </div>
+        <div>
+          <img src="img/2 2nd 4.jpg" alt="Bedding">
+          <div class="item">Bedding & Bath</div>
+        </div>
+      </div>
+      <a href="#" class="link">Shop the latest from Home</a>
+    </div>
+
+    <!-- ✅ Card 3 Fixed Layout -->
+    <div class="card">
+      <h2>Toys under $25</h2>
+      <div class="large-img">
+        <img src="img/2 3rd.jpg" alt="Gaming Setup">
+      </div>
+      <a href="#" class="link">Shop now</a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <h2>Refresh your space</h2>
+      <div class="grid">
+        <div>
+          <img src="img/2 4th 1.jpg" alt="Dresses">
+          <div class="item">Dining</div>
+        </div>
+        <div>
+          <img src="img/2 4th 2.jpg" alt="Knits">
+          <div class="item">Home</div>
+        </div>
+        <div>
+          <img src="img/2 4th 3.jpg" alt="Jackets">
+          <div class="item">Kitchen</div>
+        </div>
+        <div>
+          <img src="img/2 4th 4.jpg" alt="Jewelry">
+          <div class="item">Health and Beauty</div>
+        </div>
+      </div>
+      <a href="#" class="link">See more</a>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="slider-wrapper">
+    <div class="slider-title">Top Picks for Pakistan</div>
+
+    <div class="slider-container">
+      <div class="slide"><img src="img/slider 2 1.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 2.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 3.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 4.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 5.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 6.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 7.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 8.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 9.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 10.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 11.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 12.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 13.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 14.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 15.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 16.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 17.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 18.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 19.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 20.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 21.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 22.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 23.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 24.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 25.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 26.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 27.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 28.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 29.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 30.jpg" alt=""></div>
+    </div>
+  </div>
+
+  <div class="slider-wrapper">
+    <div class="slider-title">International top sellers in Kitchen</div>
+
+    <div class="slider-container">
+      <div class="slide"><img src="img/slider 1 1.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 2.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 3.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 4.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 5.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 6.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 7.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 8.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 9.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 10.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 11.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 12.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 13.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 14.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 15.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 16.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 17.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 18.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 19.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 20.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 21.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 22.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 23.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 24.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 25.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 26.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 27.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 28.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 29.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 1 30.jpg" alt=""></div>
+    </div>
+  </div>
+
+
+
+  <div class="container-2">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <h2><span>Shop for your home</span> essentials</h2>
+      <div class="grid">
+        <div>
+          <img src="img/1st 1.jpg" alt="Cleaning Tools">
+          <div class="item">Cleaning Tools</div>
+        </div>
+        <div>
+          <img src="img/1st 2.jpg" alt="Home Storage">
+          <div class="item">Home Storage</div>
+        </div>
+        <div>
+          <img src="img/1st 3.jpg" alt="Home Decor">
+          <div class="item">Home Decor</div>
+        </div>
+        <div>
+          <img src="img/1st 4.jpg" alt="Bedding">
+          <div class="item">Bedding</div>
+        </div>
+      </div>
+      <a href="#" class="link">Discover more in Home</a>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <h2>Get your game on</h2>
+      <div class="large-img">
+        <img src="img/2nd.jpg" alt="Gaming Setup">
+      </div>
+      <a href="#" class="link">Shop gaming</a>
+    </div>
+
+    <!-- ✅ Card 3 Fixed Layout -->
+    <div class="card">
+      <h2>Top categories in Kitchen appliances</h2>
+
+      <!-- Top big image -->
+      <div class="big-img">
+        <img src="img/3rd 1.jpg" alt="Cooker">
+        <div class="item">Cooker</div>
+      </div>
+
+      <!-- 3 images in row -->
+      <div class="row-three">
+        <div>
+          <img src="img/3rd 2.jpg" alt="Coffee">
+          <div class="item">Coffee</div>
+        </div>
+        <div>
+          <img src="img/3rd 3.jpg" alt="Pots and Pans">
+          <div class="item">Pots and Pans</div>
+        </div>
+        <div>
+          <img src="img/3rd 4.jpg" alt="Kettles">
+          <div class="item">Kettles</div>
+        </div>
+      </div>
+
+      <a href="#" class="link">Explore all products in Kitchen</a>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="card">
+      <h2>Fashion trends you like</h2>
+      <div class="grid">
+        <div>
+          <img src="img/4th 1.jpg" alt="Dresses">
+          <div class="item">Dresses</div>
+        </div>
+        <div>
+          <img src="img/4th 2.jpg" alt="Knits">
+          <div class="item">Knits</div>
+        </div>
+        <div>
+          <img src="img/4th 3.jpg" alt="Jackets">
+          <div class="item">Jackets</div>
+        </div>
+        <div>
+          <img src="img/4th 4.jpg" alt="Jewelry">
+          <div class="item">Jewelry</div>
+        </div>
+      </div>
+      <a href="#" class="link">Explore more</a>
+    </div>
+
+  </div>
+
+
+  <div class="slider-wrapper">
+    <div class="slider-title">Top Picks for Pakistan</div>
+
+    <div class="slider-container">
+      <div class="slide"><img src="img/slider 2 1.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 2.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 3.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 4.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 5.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 6.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 7.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 8.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 9.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 10.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 11.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 12.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 13.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 14.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 15.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 16.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 17.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 18.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 19.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 20.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 21.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 22.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 23.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 24.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 25.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 26.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 27.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 28.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 29.jpg" alt=""></div>
+      <div class="slide"><img src="img/slider 2 30.jpg" alt=""></div>
+    </div>
+  </div>
+
+
+
+  <div class="big-card">
+    <div class="section-title">Recommended Just for You</div>
+    <hr class="fancy-line">
+
+    <div class="slider-container">
+      <!-- Card 1 -->
+      <div class="product-card">
+        <img src="img/slider 3 1.jpg" alt="Product 1">
+        <div class="product-title">Wireless Bluetooth Earbuds (V5.1, Noise Cancellation)</div>
+        <div class="product-description">
+          Experience crystal-clear calls and immersive music with our latest Bluetooth 5.1 earbuds. Featuring
+          deep bass, ergonomic fit, and 20+ hours of battery with charging case.
+        </div>
+        <div class="price">Rs. 2,199</div>
+        <div class="stars">★★★★★</div>
+        <div class="shipping">Free Shipping</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card">
+        <img src="img/slider 3 2.jpg" alt="Product 2">
+        <div class="product-title">Smart Fitness Band 6 with AMOLED Display</div>
+        <div class="product-description">
+          Track your steps, heart rate, sleep, and SpO2 in real-time. Large AMOLED touchscreen with
+          customizable faces. Water-resistant and compatible with iOS/Android.
+        </div>
+        <div class="price">Rs. 4,499</div>
+        <div class="stars">★★★★☆</div>
+        <div class="shipping">Free Shipping</div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card">
+        <img src="img/slider 3 3.jpg" alt="Product 3">
+        <div class="product-title">Portable Bluetooth Speaker (Bass Boost, Waterproof)</div>
+        <div class="product-description">
+          This compact speaker delivers powerful bass and 360° sound. IPX5 waterproof, with built-in mic, 10hr
+          playtime, and USB-C charging for outdoor fun and home use.
+        </div>
+        <div class="price">Rs. 3,299</div>
+        <div class="stars">★★★★★</div>
+        <div class="shipping">Free Shipping</div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="product-card">
+        <img src="img/slider 3 4.jpg" alt="Product 4">
+        <div class="product-title">RGB Gaming Mouse with 6 Programmable Buttons</div>
+        <div class="product-description">
+          Lightweight design with precision tracking, customizable RGB lighting, and ergonomic grip. Built for
+          FPS, MOBA, and all-day gaming comfort.
+        </div>
+        <div class="price">Rs. 1,799</div>
+        <div class="stars">★★★★☆</div>
+        <div class="shipping">Shipping Rs. 100</div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="product-card">
+        <img src="img/slider 3 5.jpg" alt="Product 5">
+        <div class="product-title">Rechargeable LED Desk Lamp with Touch Controls</div>
+        <div class="product-description">
+          Sleek and modern design with 3 brightness levels. Adjustable neck and USB charging make it perfect
+          for study, work, or bedtime reading.
+        </div>
+        <div class="price">Rs. 2,050</div>
+        <div class="stars">★★★☆☆</div>
+        <div class="shipping">Free Shipping</div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="product-card">
+        <img src="img/slider 3 6.jpg" alt="Product 6">
+        <div class="product-title">Mini Portable Tripod Stand for Phones & Cameras</div>
+        <div class="product-description">
+          Foldable and ultra-light tripod with 360° rotation and adjustable height. Ideal for vlogging,
+          selfies, video calls, and time-lapse photography.
+        </div>
+        <div class="price">Rs. 850</div>
+        <div class="stars">★★★☆☆</div>
+        <div class="shipping">Shipping Rs. 70</div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="product-card">
+        <img src="img/slider 3 7.jpg" alt="Product 7">
+        <div class="product-title">USB Rechargeable Beard Trimmer with Precision Blades</div>
+        <div class="product-description">
+          Trim, shape, and define your style with this silent yet powerful trimmer. Comes with multiple guard
+          lengths, USB charging, and up to 90 minutes use.
+        </div>
+        <div class="price">Rs. 1,250</div>
+        <div class="stars">★★★★☆</div>
+        <div class="shipping">Free Shipping</div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="product-card">
+        <img src="img/slider 3 8.jpg" alt="Product 8">
+        <div class="product-title">Bike Phone Mount – Anti-Shock & Adjustable</div>
+        <div class="product-description">
+          Secure your phone while riding with this anti-slip, 360° rotatable bike mount. Fits all smartphones
+          and all handlebar sizes with quick-release clamp.
+        </div>
+        <div class="price">Rs. 699</div>
+        <div class="stars">★★★☆☆</div>
+        <div class="shipping">Shipping Rs. 80</div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="product-card">
+        <img src="img/slider 3 9.jpg" alt="Product 9">
+        <div class="product-title">Men’s Classic Analog Watch – Leather Strap</div>
+        <div class="product-description">
+          Timeless analog design with quartz movement, genuine leather strap, and water resistance. Perfect
+          for both formal and casual wear.
+        </div>
+        <div class="price">Rs. 3,299</div>
+        <div class="stars">★★★★★</div>
+        <div class="shipping">Free Shipping</div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="product-card">
+        <img src="img/slider 3 10.jpg" alt="Product 10">
+        <div class="product-title">High-Speed USB Flash Drive (64GB, USB 3.0)</div>
+        <div class="product-description">
+          Transfer files quickly with this sleek, durable flash drive. Plug & play compatibility for PC, Mac,
+          Smart TVs, and more. Keychain loop included.
+        </div>
+        <div class="price">Rs. 1,149</div>
+        <div class="stars">★★★★☆</div>
+        <div class="shipping">Free Shipping</div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div><a href="#top" class="back-to-top">&#8679;</a></div>
+
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-column">
+        <h3>Get to Know Us</h3>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+        <a href="#">About Amazon</a>
+        <a href="#">Investor Relations</a>
+        <a href="#">Amazon Devices</a>
+        <a href="#">Amazon Science</a>
+      </div>
+      <div class="footer-column">
+        <h3>Make Money with Us</h3>
+        <a href="#">Sell products on Amazon</a>
+        <a href="#">Sell on Amazon Business</a>
+        <a href="#">Sell apps on Amazon</a>
+        <a href="#">Become an Affiliate</a>
+        <a href="#">Advertise Your Products</a>
+        <a href="#">Self-Publish with Us</a>
+        <a href="#">Host an Amazon Hub</a>
+        <a href="#">› See More Make Money with Us</a>
+      </div>
+      <div class="footer-column">
+        <h3>Amazon Payment Products</h3>
+        <a href="#">Amazon Business Card</a>
+        <a href="#">Shop with Points</a>
+        <a href="#">Reload Your Balance</a>
+        <a href="#">Amazon Currency Converter</a>
+      </div>
+      <div class="footer-column">
+        <h3>Let Us Help You</h3>
+        <a href="#">Amazon and COVID-19</a>
+        <a href="#">Your Account</a>
+        <a href="#">Your Orders</a>
+        <a href="#">Shipping Rates & Policies</a>
+        <a href="#">Returns & Replacements</a>
+        <a href="#">Manage Your Content and Devices</a>
+        <a href="#">Help</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo">
+      <select name="language" id="language">
+        <option value="en">English - EN</option>
+        <option value="es">Spanish - ES</option>
+        <option value="fr">French - FR</option>
+        <option value="de">German - DE</option>
+        <option value="it">Italian - IT</option>
+        <option value="ja">Japanese - JA</option>
+        <option value="zh">Chinese - ZH</option>
+      </select>
+      <button>$ USD - U.S. Dollar</button>
+      <div class="location">
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="US Flag">
+        United States
+      </div>
+    </div>
+
+    <div class="link-grid">
+      <!-- Repeat link-items -->
+      <div class="link-item"><strong>Amazon Music</strong><span>Stream millions of songs</span></div>
+      <div class="link-item"><strong>Amazon Ads</strong><span>Reach customers wherever they spend their time</span></div>
+      <div class="link-item"><strong>6pm</strong><span>Score deals on fashion brands</span></div>
+      <div class="link-item"><strong>AbeBooks</strong><span>Books, art & collectibles</span></div>
+      <div class="link-item"><strong>ACX</strong><span>Audiobook Publishing Made Easy</span></div>
+      <div class="link-item"><strong>Sell on Amazon</strong><span>Start a Selling Account</span></div>
+      <div class="link-item"><strong>Veeqo</strong><span>Shipping Software Inventory Management</span></div>
+      <div class="link-item"><strong>Amazon Business</strong><span>Everything For Your Business</span></div>
+      <div class="link-item"><strong>AmazonGlobal</strong><span>Ship Orders Internationally</span></div>
+      <div class="link-item"><strong>Amazon Web Services</strong><span>Scalable Cloud Computing Services</span></div>
+      <div class="link-item"><strong>Audible</strong><span>Listen to Books & Original Audio Performances</span></div>
+      <div class="link-item"><strong>Box Office Mojo</strong><span>Find Movie Box Office Data</span></div>
+      <div class="link-item"><strong>Goodreads</strong><span>Book reviews & recommendations</span></div>
+      <div class="link-item"><strong>IMDb</strong><span>Movies, TV & Celebrities</span></div>
+      <div class="link-item"><strong>IMDbPro</strong><span>Get Info Entertainment Professionals Need</span></div>
+      <div class="link-item"><strong>Kindle Direct Publishing</strong><span>Indie Digital & Print Publishing Made Easy</span></div>
+      <div class="link-item"><strong>Prime Video Direct</strong><span>Video Distribution Made Easy</span></div>
+      <div class="link-item"><strong>Shopbop</strong><span>Designer Fashion Brands</span></div>
+      <div class="link-item"><strong>Woot!</strong><span>Deals and Shenanigans</span></div>
+      <div class="link-item"><strong>Zappos</strong><span>Shoes & Clothing</span></div>
+      <div class="link-item"><strong>Ring</strong><span>Smart Home Security Systems</span></div>
+      <div class="link-item"><strong>eero WiFi</strong><span>Stream 4K Video in Every Room</span></div>
+      <div class="link-item"><strong>Blink</strong><span>Smart Security for Every Home</span></div>
+      <div class="link-item"><strong>Neighbors App</strong><span>Real-Time Crime & Safety Alerts</span></div>
+      <div class="link-item"><strong>Amazon Subscription Boxes</strong><span>Top subscription boxes – right to your door</span></div>
+      <div class="link-item"><strong>PillPack</strong><span>Pharmacy Simplified</span></div>
+    </div>
+
+    <div class="footer-legal">
+      <a href="#">Conditions of Use</a>
+      <a href="#">Privacy Notice</a>
+      <a href="#">Consumer Health Data Privacy Disclosure</a>
+      <a href="#">Your Ads Privacy Choices</a>
+      <br><br>
+      © 1996-2025, Amazon.com, Inc. or its affiliates
+    </div>
+  </footer>
+
+
+
+
+  <script>
+    let current = 0;
+    const slides = document.querySelectorAll('.hero-slider .slide');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    }
+
+    function prevSlide() {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    }
+
+    setInterval(nextSlide, 4000);
+  </script>
+</body>
+
+</html>
